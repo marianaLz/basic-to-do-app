@@ -25,20 +25,34 @@ const Navbar = () => {
         <MyContext.Consumer>
           {({ state }) => {
             return !state.user ? (
-              <div>
-                <NavLink exact to="/login">
-                  Login
-                </NavLink>
-                <NavLink exact to="/signup">
-                  Signup
-                </NavLink>
-              </div>
+              <nav className="uk-navbar-container" uk-navbar="true">
+                <div className="uk-navbar-right">
+                  <ul className="uk-navbar-nav">
+                    <li>
+                      <NavLink exact to="/login">
+                        Login
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink exact to="/signup">
+                        Signup
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
             ) : (
-              <div>
-                <NavLink exact to="/">
-                  <button onClick={handleLogout}>Logout</button>
-                </NavLink>
-              </div>
+              <nav className="uk-navbar-container" uk-navbar="true">
+                <div className="uk-navbar-right">
+                  <ul className="uk-navbar-nav">
+                    <li>
+                      <NavLink exact to="/" onClick={handleLogout}>
+                        Logout
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
             );
           }}
         </MyContext.Consumer>

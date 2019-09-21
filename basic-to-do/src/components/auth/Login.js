@@ -37,26 +37,40 @@ const Login = props => {
   };
 
   return (
-    <div>
+    <div className="uk-flex uk-flex-center uk-align-center">
       <div>
-        <div>
+        <div className="uk-margin-large-top uk-text-center uk-card uk-card-default uk-card-body">
           <h2>Login</h2>
-          <input
-            type="text"
-            name="username"
-            placeholder="Usuario"
-            onChange={handleInputs}
-          />{" "}
-          <input
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            onChange={handleInputs}
-          />{" "}
-          <button onClick={handleLogin}>Login</button>{" "}
+          <div className=" uk-margin">
+            <div className="uk-inline">
+              <span className="uk-form-icon" uk-icon="icon: user"></span>
+              <input
+                type="text"
+                name="username"
+                placeholder="User"
+                onChange={handleInputs}
+                className="uk-input uk-form-width-medium"
+              />
+            </div>
+          </div>
+          <div className=" uk-margin">
+            <div className="uk-inline uk-margin">
+              <span className="uk-form-icon" uk-icon="icon: lock"></span>
+              <input
+                type="text"
+                name="password"
+                placeholder="Password"
+                onChange={handleInputs}
+                className="uk-input uk-form-width-medium"
+              />
+            </div>
+          </div>
+          <button className="uk-button uk-button-primary" onClick={handleLogin}>
+            Login
+          </button>
           <p>
-            ¿Aún no tienes una cuenta con nosotros?{" "}
-            <Link to="/signup">Regístrate</Link>
+            Don't have an account yet?
+            <Link to="/signup"> Signup</Link>
           </p>
         </div>
       </div>
