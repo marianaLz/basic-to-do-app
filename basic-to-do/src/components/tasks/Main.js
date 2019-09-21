@@ -52,10 +52,12 @@ const Main = props => {
   if (!user) return <p>Unauthorized...</p>;
   else
     return (
-      <div>
-        <div>
-          <h1>{user.username}</h1>
-          <span>estas son tus tasks</span>
+      <div className="uk-flex uk-flex-around">
+        <div className="uk-width-1-2">
+          <h1 className="uk-margin-large-top uk-text-center">
+            Welcome {user.username}!
+          </h1>
+          <h3 className="uk-text-center">Your tasks list is here:</h3>
           <TasksList
             tasks={tasks}
             editTask={editTask}
@@ -63,8 +65,7 @@ const Main = props => {
             setTaskToEdit={setTaskToEdit}
           />
         </div>
-        <div>
-          <h3>Agrega un task</h3>
+        <div className="uk-width-1-2">
           <TaskForm
             {...form}
             createTask={createTask}

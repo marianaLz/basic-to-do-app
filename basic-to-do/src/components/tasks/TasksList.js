@@ -2,8 +2,8 @@ import React from "react";
 import TaskListItem from "./TaskListItem";
 
 const TaskList = ({ tasks, deleteTask, setTaskToEdit }) => (
-  <div>
-    <div>
+  <div className="uk-flex uk-flex-center">
+    <div className="uk-width-2-3">
       {tasks.map((task, index) => (
         <TaskListItem
           deleteTask={() => deleteTask(task._id)}
