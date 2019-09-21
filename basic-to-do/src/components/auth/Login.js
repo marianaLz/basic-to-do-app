@@ -6,16 +6,23 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 
 const Login = props => {
-  const { login } = useContext(MyContext);
+  const {
+    login,
+    state: { user }
+  } = useContext(MyContext);
   const authService = new AuthService();
   const [form, handleInputs] = useForm();
+
+  useEffect(() => {
+    if (user) props.history.push("/");
+  }, [user]);
 
   const handleLogin = () => {
     authService.login(form).then(response => {
       if (!response.data.message) {
         localStorage.setItem("USER", JSON.stringify(response.data));
-        props.history.push("/");
         login(response.data);
+        props.history.push("/");
       } else {
         swal({
           title: "Oops...",

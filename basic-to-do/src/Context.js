@@ -1,5 +1,4 @@
 import React, { createContext, Component } from "react";
-import useForm from "./hooks/useForm";
 
 export const MyContext = createContext();
 
@@ -19,6 +18,12 @@ class ContextProvider extends Component {
     this.setState({ tasks });
   };
 
+  onEditTask = (index, task) => {
+    const { tasks } = this.state;
+    tasks.splice(index, 1, task);
+    this.setState({ tasks });
+  };
+
   setTaskToEdit = task => {
     this.setState({ form: task }, () => console.log(this.state));
   };
@@ -33,13 +38,29 @@ class ContextProvider extends Component {
     this.setState({ user });
   };
 
-  logout = () => this.setState({ user: null });
+  logout = () => this.setState({ user: null, tasks: [] });
 
   render() {
-    const { state, login, logout, setTasks, removeTask, setTaskToEdit } = this;
+    const {
+      state,
+      login,
+      logout,
+      setTasks,
+      removeTask,
+      setTaskToEdit,
+      onEditTask
+    } = this;
     return (
       <MyContext.Provider
-        value={{ state, login, logout, setTasks, removeTask, setTaskToEdit }}
+        value={{
+          state,
+          login,
+          logout,
+          setTasks,
+          removeTask,
+          setTaskToEdit,
+          onEditTask
+        }}
       >
         {this.props.children}
       </MyContext.Provider>

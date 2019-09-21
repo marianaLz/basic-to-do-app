@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { MyContext } from "../../Context";
 import useForm from "../../hooks/useForm";
 import TasksService from "../../services/tasks";
@@ -10,6 +10,7 @@ const Main = props => {
     setTasks,
     removeTask,
     setTaskToEdit,
+    onEditTask,
     state: { user, tasks, form: tasktoEdit }
   } = useContext(MyContext);
   const [form, handleInputs, setForm] = useForm();
@@ -20,12 +21,14 @@ const Main = props => {
       tasksService.allTasks().then(({ data }) => {
         setTasks([...data]);
       });
+    } else {
+      props.history.push("/login");
     }
   }, [user]);
 
   useEffect(() => {
     setForm(tasktoEdit);
-  }, [tasktoEdit, form, setForm]);
+  }, [tasktoEdit]);
 
   const createTask = () => {
     tasksService.createTasks(form).then(({ data: task }) => {
@@ -34,7 +37,10 @@ const Main = props => {
   };
 
   const editTask = id => {
-    tasksService.editTasks(id, form);
+    tasksService.editTasks(id, form).then(({ data }) => {
+      const index = tasks.findIndex(t => t._id === data._id);
+      onEditTask(index, data);
+    });
   };
 
   const deleteTask = id => {
@@ -63,7 +69,7 @@ const Main = props => {
             {...form}
             createTask={createTask}
             handleInputs={handleInputs}
-            editTask={editTask}
+            editTask={() => editTask(form._id)}
           />
         </div>
       </div>
