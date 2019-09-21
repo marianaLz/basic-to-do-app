@@ -43,7 +43,7 @@ const Signup = props => {
             <div className="uk-inline uk-margin">
               <span className="uk-form-icon" uk-icon="icon: lock"></span>
               <input
-                type="text"
+                type="password"
                 name="password"
                 placeholder="Password"
                 onChange={handleInputs}

@@ -1,5 +1,8 @@
 import axios from "axios";
-const baseURL = "http://localhost:3001";
+const isProduction = process.env.NODE_ENV === "production";
+const baseURL = isProduction
+  ? "https://basic-to-do-app.herokuapp.com"
+  : "http://localhost:3001";
 
 class taskService {
   constructor() {

@@ -18,7 +18,10 @@ require("./config/passport");
 
 mongoose.Promise = Promise;
 mongoose
-  .connect("mongodb://localhost/blah-the-to-do-list", { useMongoClient: true })
+  .connect(process.env.DB || "mongodb://localhost/blah-the-to-do-list", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log("Connected to Mongo!");
   })
@@ -52,7 +55,7 @@ app.use(
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
-app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 app.use(
   session({
@@ -71,17 +74,21 @@ app.locals.title = "Express - Generated with IronGenerator";
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000"]
+    origin: ["*"]
   })
 );
 
 const index = require("./routes/index");
-app.use("/", index);
+app.use("/api", index);
 
 const taskRoutes = require("./routes/tasks");
 app.use("/api", taskRoutes);
 
 const authroutes = require("./routes/authroutes");
 app.use("/api", authroutes);
+
+app.use("*", (req, res) => {
+  res.sendFile(`${__dirname}/public/index.html`);
+});
 
 module.exports = app;
