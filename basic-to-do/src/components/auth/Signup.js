@@ -4,13 +4,9 @@ import AuthService from "../../services/auth";
 import { MyContext } from "../../Context";
 
 const Signup = props => {
-  const { changePlace, login } = useContext(MyContext);
+  const { login } = useContext(MyContext);
   const authService = new AuthService();
   const [form, handleInputs] = useForm();
-
-  useEffect(() => {
-    changePlace("auth");
-  }, [changePlace]);
 
   const handleSignup = () => {
     authService

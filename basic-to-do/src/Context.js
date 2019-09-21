@@ -1,32 +1,50 @@
 import React, { createContext, Component } from "react";
+import useForm from "./hooks/useForm";
 
 export const MyContext = createContext();
 
-export default class ContextProvider extends Component {
+class ContextProvider extends Component {
   constructor() {
     super();
-    //const user = localStorage.getItem("USER");
     this.state = {
-      place: "Main",
-      user: null
+      user: JSON.parse(localStorage.getItem("USER")),
+      tasks: [],
+      form: {}
     };
   }
 
-  changePlace = place => {
-    this.setState({ place });
+  setTasks = task => {
+    let { tasks } = this.state;
+    tasks = Array.isArray(task) ? [...tasks, ...task] : [...tasks, task];
+    this.setState({ tasks });
+  };
+
+  setTaskToEdit = task => {
+    this.setState({ form: task }, () => console.log(this.state));
+  };
+
+  removeTask = id => {
+    let { tasks } = this.state;
+    tasks = tasks.filter(task => task._id !== id);
+    this.setState({ tasks });
   };
 
   login = user => {
     this.setState({ user });
   };
+
   logout = () => this.setState({ user: null });
 
   render() {
-    const { changePlace, state, login, logout } = this;
+    const { state, login, logout, setTasks, removeTask, setTaskToEdit } = this;
     return (
-      <MyContext.Provider value={{ state, changePlace, login, logout }}>
+      <MyContext.Provider
+        value={{ state, login, logout, setTasks, removeTask, setTaskToEdit }}
+      >
         {this.props.children}
       </MyContext.Provider>
     );
   }
 }
+
+export default ContextProvider;

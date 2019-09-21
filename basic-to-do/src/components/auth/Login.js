@@ -6,13 +6,9 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 
 const Login = props => {
-  const { changePlace, login } = useContext(MyContext);
+  const { login } = useContext(MyContext);
   const authService = new AuthService();
   const [form, handleInputs] = useForm();
-
-  useEffect(() => {
-    changePlace("auth");
-  }, [changePlace]);
 
   const handleLogin = () => {
     authService.login(form).then(response => {
